@@ -1,5 +1,33 @@
+#include <GL\glew.h>
 #include <SFML/Graphics.hpp>
 #include <SFML/OpenGL.hpp>
+#include <gl/GLU.h>
+#include "Shader.h"
+#include "Bone.h"
+
+
+GLuint VBO;
+
+
+static const char* pVS = "                                                    \n\
+#version 330                                                                  \n\
+                                                                              \n\
+layout (location = 0) in vec3 Position;                                       \n\
+                                                                              \n\
+void main()                                                                   \n\
+{                                                                             \n\
+    gl_Position = vec4(0.5 * Position.x, 0.5 * Position.y, Position.z, 1.0);  \n\
+}";
+
+static const char* pFS = "                                                    \n\
+#version 330                                                                  \n\
+                                                                              \n\
+out vec4 FragColor;                                                           \n\
+                                                                              \n\
+void main()                                                                   \n\
+{                                                                             \n\
+    FragColor = vec4(1.0, 0.0, 0.0, 1.0);                                     \n\
+}";
 
 int main(int argc, char** argv)
 {
@@ -44,11 +72,28 @@ int main(int argc, char** argv)
    
     sf::Clock clock;
 
+	
+	//sf::Vector3f Vertices[4];
+ //   Vertices[0] = sf::Vector3f(-1.0f, -1.0f, 0.0f);
+ //   Vertices[1] = sf::Vector3f(1.0f, -1.0f, 0.0f);
+ //   Vertices[2] = sf::Vector3f(0.0f, 1.0f, 0.0f);
+	//Vertices[3] = sf::Vector3f(1.0f, 1.0f, 0.0f);
 
+ //	glGenBuffers(1, &VBO);
+	//glBindBuffer(GL_ARRAY_BUFFER, VBO);
+	//glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
+
+	
+	Bone* b1 = new Bone(0.0 , 0.0 , 0.0,1.0, NULL);
+
+
+	Shader* shader = new Shader();
+	shader->CompileShaders();
 
     // Start game loop
     while (window.isOpen())
     {
+		
         // Process events
         sf::Event event;
         while (window.pollEvent(event))
@@ -69,17 +114,21 @@ int main(int argc, char** argv)
 
 		
 		
-        // Clear the depth buffer
+      //   Clear the depth buffer
         glClear(GL_DEPTH_BUFFER_BIT);
-
 		
+/*		glEnableVertexAttribArray(0);
+		glBindBuffer(GL_ARRAY_BUFFER, VBO);
+		glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, 0, 0);
 
-
+		glDrawArrays(GL_QUADS, 0, 4);
+		glDisableVertexAttribArray(0)*/;
+		b1->Draw();
 
         //// Draw some text on top of our OpenGL object
-        window.pushGLStates();
-        window.draw(text);
-        window.popGLStates();
+        //window.pushGLStates();
+        //window.draw(text);
+        //window.popGLStates();
 
         // Finally, display the rendered frame on screen
         window.display();
