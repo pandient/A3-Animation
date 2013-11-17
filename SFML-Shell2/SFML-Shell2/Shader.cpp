@@ -2,26 +2,31 @@
 #include <stdio.h>
 using namespace std;
 
-const char* Shader::pVS= "                                                    \n\
-#version 330                                                                  \n\
-                                                                              \n\
-layout (location = 0) in vec3 Position;                                       \n\
-                                                                              \n\
-void main()                                                                   \n\
-{                                                                             \n\
-    gl_Position = vec4(0.5 * Position.x, 0.5 * Position.y, Position.z, 1.0);  \n\
+const char* Shader::pVS= "                                                          \n\
+#version 330                                                                        \n\
+                                                                                    \n\
+layout (location = 0) in vec3 Position;                                             \n\
+                                                                                    \n\
+uniform mat4 gWorld;                                                                \n\
+                                                                                    \n\
+out vec4 Color;                                                                     \n\
+                                                                                    \n\
+void main()                                                                         \n\
+{                                                                                   \n\
+    gl_Position = gWorld * vec4(Position, 1.0);                                     \n\
 }";
 
- const char* Shader::pFS = "                                                    \n\
-#version 330                                                                  \n\
-                                                                              \n\
-out vec4 FragColor;                                                           \n\
-                                                                              \n\
-void main()                                                                   \n\
-{                                                                             \n\
-    FragColor = vec4(1.0, 0.0, 0.0, 1.0);                                     \n\
+ const char* Shader::pFS = "                                                          \n\
+#version 330                                                                        \n\
+                                                                                    \n\
+                                                                                    \n\
+out vec4 FragColor;                                                                 \n\
+                                                                                    \n\
+void main()                                                                         \n\
+{                                                                                   \n\
+    FragColor = vec4(1.0, 0.0, 0.0, 1.0);                                           \n\
 }";
-
+ GLuint Shader::gWorldLocation;
 Shader::~Shader(void)
 {
 }
@@ -94,4 +99,6 @@ GLuint ShaderProgram = glCreateProgram();
     }
 
     glUseProgram(ShaderProgram);
+	Shader::gWorldLocation = glGetUniformLocation(ShaderProgram, "gWorld");
+    assert(gWorldLocation != 0xFFFFFFFF);
 }

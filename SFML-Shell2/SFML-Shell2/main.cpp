@@ -6,28 +6,6 @@
 #include "Bone.h"
 
 
-GLuint VBO;
-
-
-static const char* pVS = "                                                    \n\
-#version 330                                                                  \n\
-                                                                              \n\
-layout (location = 0) in vec3 Position;                                       \n\
-                                                                              \n\
-void main()                                                                   \n\
-{                                                                             \n\
-    gl_Position = vec4(0.5 * Position.x, 0.5 * Position.y, Position.z, 1.0);  \n\
-}";
-
-static const char* pFS = "                                                    \n\
-#version 330                                                                  \n\
-                                                                              \n\
-out vec4 FragColor;                                                           \n\
-                                                                              \n\
-void main()                                                                   \n\
-{                                                                             \n\
-    FragColor = vec4(1.0, 0.0, 0.0, 1.0);                                     \n\
-}";
 
 int main(int argc, char** argv)
 {
@@ -69,7 +47,7 @@ int main(int argc, char** argv)
 	/*glMatrixMode(GL_PROJECTION);
  	glOrtho(-200, 200, -200, 200, -5, 5);
  	glMatrixMode(GL_MODELVIEW);*/
-   
+	glMatrixMode(GL_MODELVIEW);
     sf::Clock clock;
 
 	
@@ -84,8 +62,10 @@ int main(int argc, char** argv)
 	//glBufferData(GL_ARRAY_BUFFER, sizeof(Vertices), Vertices, GL_STATIC_DRAW);
 
 	
-	Bone* b1 = new Bone(0.0 , 0.0 , 0.0,1.0, NULL);
-
+	Bone* b1 = new Bone(0.0 , 0.0 , 0.0 ,1.0, NULL);
+	Bone* b2 = new Bone(0.0 , 0.0 , 1.57 ,1.0, NULL);
+	b1->AddChild(b2);
+	std::cout << "asdf";
 
 	Shader* shader = new Shader();
 	shader->CompileShaders();
@@ -123,9 +103,12 @@ int main(int argc, char** argv)
 
 		glDrawArrays(GL_QUADS, 0, 4);
 		glDisableVertexAttribArray(0)*/;
+		
+		//window.pushGLStates();
 		b1->Draw();
+		//window.popGLStates();
 
-        //// Draw some text on top of our OpenGL object
+
         //window.pushGLStates();
         //window.draw(text);
         //window.popGLStates();

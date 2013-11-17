@@ -81,10 +81,13 @@
   <ItemGroup>
     <ClCompile Include="Bone.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Pipeline.cpp" />
     <ClCompile Include="Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Bone.h" />
+    <ClInclude Include="math_3d.h" />
+    <ClInclude Include="Pipeline.h" />
     <ClInclude Include="Shader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

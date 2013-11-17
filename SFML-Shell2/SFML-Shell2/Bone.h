@@ -3,7 +3,9 @@
 #include<vector>
 #include"SFML\OpenGL.hpp"
 #include"SFML\Graphics.hpp"
-#define bwidth 0.2
+#include "Pipeline.h"
+#include "Shader.h"
+#define bwidth 0.05
 class Bone
 {
 public:
@@ -19,5 +21,7 @@ public:
 	void Draw();
 private:
 	GLuint VBO;
+	GLuint IBO;
+
 };
 
